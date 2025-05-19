@@ -3,7 +3,16 @@ package main
 import (
 	"fmt"
 	"log"
+	"time"
 )
+
+type User struct {
+	FirstName   string
+	LastName    string
+	PhoneNumber string
+	Age         int
+	BirthDate   time.Time
+}
 
 func main() {
 	// Variables & Functions
@@ -28,6 +37,17 @@ func main() {
 	log.Println("myString is set to", myString)
 	changeUsingPointer(&myString)
 	log.Println("myString is set to", myString)
+
+	// Types & Structs
+	addPartitionBar("Types & Structs")
+
+	user := User{
+		FirstName: "Trevor",
+		LastName:  "Sawler",
+	}
+
+	log.Println(user.FirstName)
+	log.Println(user.LastName)
 }
 
 func saySomething() (string, string) {
