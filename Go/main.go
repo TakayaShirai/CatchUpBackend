@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"log"
 	"time"
+
+	"github.com/TakayaShirai/CatchUpBackend/Go/helpers"
 )
 
 type User struct {
@@ -175,6 +177,14 @@ func main() {
 	}
 
 	PrintInfo(&gorilla)
+
+	// Packages
+	addPartitionBar("Packages")
+
+	var newVar helpers.SomeType
+	newVar.TypeName = "Some name"
+	newVar.TypeNumber = 1
+	log.Println(newVar.TypeName, newVar.TypeNumber)
 }
 
 func saySomething() (string, string) {
