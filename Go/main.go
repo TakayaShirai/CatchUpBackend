@@ -91,6 +91,16 @@ func main() {
 	log.Println(mySlice)
 	log.Println(numbers)
 	log.Println(numbers[0:2])
+
+	// Decision Structures
+	addPartitionBar("Decision Structures")
+	cat := "cat"
+
+	if cat == "cat" {
+		log.Println("Cat is cat")
+	} else {
+		log.Println("Cat is not cat")
+	}
 }
 
 func saySomething() (string, string) {
