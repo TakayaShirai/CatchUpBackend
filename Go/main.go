@@ -185,6 +185,22 @@ func main() {
 	newVar.TypeName = "Some name"
 	newVar.TypeNumber = 1
 	log.Println(newVar.TypeName, newVar.TypeNumber)
+
+	// Channels
+	addPartitionBar("Channels")
+
+	intChan := make(chan int)
+	defer close(intChan)
+	go CalculateValue(intChan)
+	num := <-intChan
+	log.Println(num)
+}
+
+const numPool = 10
+
+func CalculateValue(intChan chan int) {
+	randomNumber := helpers.RandomNumber(numPool)
+	intChan <- randomNumber
 }
 
 func saySomething() (string, string) {
