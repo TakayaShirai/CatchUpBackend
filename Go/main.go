@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"time"
@@ -58,6 +59,13 @@ func (d *Gorilla) NumberOfLegs() int {
 
 func PrintInfo(a Animal) {
 	fmt.Println("This animal says", a.Says(), "and has", a.NumberOfLegs(), "legs")
+}
+
+type Person struct {
+	FirstName string `json:"first_name"`
+	LastName  string `json:"last_name"`
+	HairColor string `json:"hair_color"`
+	HasDog    bool   `json:"has_dog"`
 }
 
 func main() {
@@ -194,6 +202,59 @@ func main() {
 	go CalculateValue(intChan)
 	num := <-intChan
 	log.Println(num)
+
+	// JSON
+	myJSON := `
+	[
+		{
+			"first_name": "Clark",
+			"last_name": "Kent",
+			"hair_color": "black",
+			"has_dog": true	
+		},
+		{
+			"first_name": "Bruce",
+			"last_name": "Wayne",
+			"hair_color": "black",
+			"has_dog": false
+		}
+	]`
+
+	// Unmarshalling: Convert a JSON string into Go structs.
+	// Marshalling: Convert Go structs back into a JSON string.
+	var unmarshalled []Person
+	err := json.Unmarshal([]byte(myJSON), &unmarshalled)
+
+	if err != nil {
+		log.Println("Error unmarshalling json", err)
+	}
+
+	log.Printf("unmarshalled: %v", unmarshalled)
+
+	// write json from a struct
+	var newSlice []Person
+
+	var m1 Person
+	m1.FirstName = "Wally"
+	m1.LastName = "West"
+	m1.HairColor = "red"
+	m1.HasDog = false
+	newSlice = append(newSlice, m1)
+
+	var m2 Person
+	m2.FirstName = "Bob"
+	m2.LastName = "West"
+	m2.HairColor = "black"
+	m2.HasDog = true
+	newSlice = append(newSlice, m2)
+
+	newJson, err := json.MarshalIndent(newSlice, "", "    ")
+
+	if err != nil {
+		log.Println("error marshalling", err)
+	}
+
+	fmt.Println(string(newJson))
 }
 
 const numPool = 10
