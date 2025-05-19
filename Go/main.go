@@ -71,6 +71,26 @@ func main() {
 	log.Println("myVar2 is set to", myVar2.FirstName)
 	log.Println("myVar is set to", myVar.printFirstName())
 	log.Println("myVar2 is set to", myVar2.printFirstName())
+
+	// Maps & Slices
+	addPartitionBar("Maps & Slices")
+
+	myMap := make(map[string]string)
+	myMap["dog"] = "Samson"
+	myMap["other-dog"] = "Cassie"
+
+	log.Println(myMap["dog"])
+	log.Println(myMap["other-dog"])
+
+	var mySlice []string
+	numbers := []int{1, 2, 3}
+
+	mySlice = append(mySlice, "Trevor")
+	mySlice = append(mySlice, "John")
+
+	log.Println(mySlice)
+	log.Println(numbers)
+	log.Println(numbers[0:2])
 }
 
 func saySomething() (string, string) {
