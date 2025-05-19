@@ -22,6 +22,42 @@ func (m *myStruct) printFirstName() string {
 	return m.FirstName
 }
 
+type Animal interface {
+	Says() string
+	NumberOfLegs() int
+}
+
+type Dog struct {
+	Name  string
+	Breed string
+}
+
+func (d *Dog) Says() string {
+	return "Woof"
+}
+
+func (d *Dog) NumberOfLegs() int {
+	return 4
+}
+
+type Gorilla struct {
+	Name          string
+	Color         string
+	NumberOfTeeth int
+}
+
+func (d *Gorilla) Says() string {
+	return "Ugh"
+}
+
+func (d *Gorilla) NumberOfLegs() int {
+	return 2
+}
+
+func PrintInfo(a Animal) {
+	fmt.Println("This animal says", a.Says(), "and has", a.NumberOfLegs(), "legs")
+}
+
 func main() {
 	// Variables & Functions
 	addPartitionBar("Variables & Functions")
@@ -122,6 +158,23 @@ func main() {
 		log.Println(animalType, name)
 	}
 
+	// Interfaces
+	addPartitionBar("Interfaces")
+
+	dog := Dog{
+		Name:  "Samson",
+		Breed: "German Shephered",
+	}
+
+	PrintInfo(&dog)
+
+	gorilla := Gorilla{
+		Name:          "Jock",
+		Color:         "grey",
+		NumberOfTeeth: 38,
+	}
+
+	PrintInfo(&gorilla)
 }
 
 func saySomething() (string, string) {
