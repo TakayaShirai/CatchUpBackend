@@ -101,6 +101,27 @@ func main() {
 	} else {
 		log.Println("Cat is not cat")
 	}
+
+	// Loops & Ranging
+	addPartitionBar("Loops & Ranging")
+
+	for i := 0; i <= 3; i++ {
+		log.Println(i)
+	}
+
+	animals := []string{"dog", "fish", "horse", "cow", "cat"}
+	for _, animal := range animals {
+		log.Println(animal)
+	}
+
+	animalsMap := make(map[string]string)
+	animalsMap["dog"] = "Fido"
+	animalsMap["cat"] = "Fluffy"
+
+	for animalType, name := range animalsMap {
+		log.Println(animalType, name)
+	}
+
 }
 
 func saySomething() (string, string) {
