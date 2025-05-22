@@ -6,38 +6,53 @@ import (
 	"net/http"
 	"path/filepath"
 	"text/template"
+
+	"github.com/TakayaShirai/CatchUpBackend/BasicWebAppBootcamp/pkg/config"
+	"github.com/TakayaShirai/CatchUpBackend/BasicWebAppBootcamp/pkg/models"
 )
 
-func RenderTemplate(w http.ResponseWriter, tmpl string) {
-	tc, err := createTemplateCache()
-	if err != nil {
-		log.Fatal(err)
+var app *config.AppConfig
+
+// NewTemplates sets the config for the template package
+func NewTemplates(a *config.AppConfig) {
+	app = a
+}
+
+func AddDefaultData(td *models.TemplateData) *models.TemplateData {
+	return td
+}
+
+func RenderTemplate(w http.ResponseWriter, tmpl string, td *models.TemplateData) {
+	var tc map[string]*template.Template
+
+	if app.UseCache {
+		tc = app.TemplateCache
+	} else {
+		tc, _ = CreateTemplateCache()
 	}
 
 	// get the requested template from the cache
 	t, ok := tc[tmpl]
 	if !ok {
-		log.Fatal(err)
+		log.Fatal("Could not get template from template cache")
 	}
 
 	buf := new(bytes.Buffer)
 
-	// Execute the retrieved template (t) and write the result to the buffer (buf)
-	// The second argument, nil, indicates that there is no data to pass to the template
-	err = t.Execute(buf, nil)
-	if err != nil {
-		log.Println(err)
-	}
+	td = AddDefaultData(td)
+
+	// Execute the retrieved template (t) and write the result to the buffer (buf) with td
+	_ = t.Execute(buf, td)
 
 	// render the template
 	// Write the contents of the buffer (buf) to the http.ResponseWriter (w), responding to the client
-	_, err = buf.WriteTo(w)
+	_, err := buf.WriteTo(w)
 	if err != nil {
 		log.Println(err)
 	}
 }
 
-func createTemplateCache() (map[string]*template.Template, error) {
+func CreateTemplateCache() (map[string]*template.Template, error) {
 	myCache := map[string]*template.Template{}
 
 	// get all of the files named *.page.tmpl from ./templates
